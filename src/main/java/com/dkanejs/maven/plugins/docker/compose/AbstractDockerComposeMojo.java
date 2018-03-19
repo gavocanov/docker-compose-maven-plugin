@@ -45,7 +45,7 @@ abstract class AbstractDockerComposeMojo extends AbstractMojo {
 	 * The Compose Api Version
 	 */
 	@Parameter(property = "dockerCompose.apiVersion")
-	private ComposeApiVersion apiVersion;
+	private String apiVersion;
 
 	/**
 	 * Verbose
@@ -122,8 +122,8 @@ abstract class AbstractDockerComposeMojo extends AbstractMojo {
 	private void setEnvironment(ProcessBuilder processBuilder) {
 		Map<String, String> environment = processBuilder.environment();
 		if (apiVersion != null) {
-			getLog().info("COMPOSE_API_VERSION: " + apiVersion.version);
-			environment.put("COMPOSE_API_VERSION", apiVersion.version);
+			getLog().info("COMPOSE_API_VERSION: " + apiVersion);
+			environment.put("COMPOSE_API_VERSION", apiVersion);
 		}
 	}
 
@@ -137,21 +137,6 @@ abstract class AbstractDockerComposeMojo extends AbstractMojo {
 
 		Command(String value) {
 			this.value = value;
-		}
-	}
-
-	@SuppressWarnings("unused")
-	enum ComposeApiVersion {
-		V1_30("1.30"),
-		V1_25("1.25"),
-		V1_24("1.24"),
-		V1_22("1.22"),
-		V1_21("1.21");
-
-		private String version;
-
-		ComposeApiVersion(String version) {
-			this.version = version;
 		}
 	}
 }
